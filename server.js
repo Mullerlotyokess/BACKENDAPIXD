@@ -23,7 +23,7 @@ app.use(express.json());
 
 app.post("/dolgozat", (req, res) =>{
     pool.query(`INSERT INTO dolgozat VALUES (null, '${req.body.name}', '${req.body.title}', '${req.body.desc}' , '${req.body.date}' , '${req.body.victim}' , '${req.body.grade}')`, (err, results) => {
-        sendResults("dolgozat", err, results, req, res, "insert into");
+        sendResults(err, results, req, res, "insert into");
     });
 })
 
@@ -57,11 +57,11 @@ app.delete("/dolgozat/:id", (req, res) =>{
 
 function sendResults(err, results, req, res, msg){
     if (err){
-        console.log(req.socket.remoteAddress + " >> " + err.sqlMessage);
+        console.log(" >> " + err.sqlMessage);
         res.status(500).send(err.sqlMessage);
     }
     else{
-        console.log(req.socket.remoteAddress + " >> " + results.length + ` record(s) ${msg} dolgozat table.`);
+        console.log(" >> " + results.length + ` record(s) ${msg} dolgozat table.`);
         res.status(200).send(results);
     }
 }
