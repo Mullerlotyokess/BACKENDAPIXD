@@ -34,13 +34,15 @@ app.get("/dolgozat", (req, res) =>{
 })
 
 app.get("/dolgozat/:id", (req, res) =>{
-    pool.query(`SELECT * FROM dolgozat WHERE ID = ${id}`, (err, results) => {
+    pool.query(`SELECT * FROM dolgozat WHERE ID = ${req.params.id}`, (err, results) => {
         sendResults(err, results, req, res, "sent from");
     });
 })
 
-app.patch("/dolgozat", (req, res) =>{
-    
+app.patch("/dolgozat/:id", (req, res) =>{
+    pool.query(`UPDATE dolgozat SET nev = '${req.body.nev}', zarodolgozatcim = '${req.body.dolgozat}', rovidleiras = '${req.body.leiras}', leadasidatum = '${req.body.datum}', konzulensnev = ${req.body.konzulensnev}, ertekeles = ${req.body.ertekeles} WHERE ID = ${req.params.id}`, (err, results) => {
+        sendResults(err, results, req, res, "sent from");
+    });
 })
 
 app.delete("/dolgozat", (req, res) =>{
@@ -50,7 +52,7 @@ app.delete("/dolgozat", (req, res) =>{
 })
 
 app.delete("/dolgozat/:id", (req, res) =>{
-    pool.query(`DELETE FROM dolgozat WHERE ID = ${id}`, (err, results) =>{
+    pool.query(`DELETE FROM dolgozat WHERE ID = ${req.params.id}`, (err, results) =>{
         sendResults(err, results, req, res, 'deleted from');
     });
 })
